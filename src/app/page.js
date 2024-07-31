@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <div className="flex items-center justify-center flex-col">
       <div className='mt-10 mb-10'>
-        <h1 className="text-2xl font-bold mb-4 text-center">Word Puzzle Grid</h1>
+        <h1 className="text-2xl font-bold mb-5 text-center">Word Puzzle Grid</h1>
         <div
           className="grid"
           style={{
@@ -36,7 +36,7 @@ export default function Home() {
             row.map((cell, cellIndex) => (
               <div
                 key={`${rowIndex}-${cellIndex}`}
-                className={`border border-white-400 flex items-center justify-center text-sm ${cell ? 'bg-white  text-black' : 'bg-black text-white'}`}
+                className={`border border-white-400 flex items-center justify-center text-sm ${cell ? 'bg-white text-black' : 'bg-black text-white'}`}
                 style={{ width: '40px', height: '40px', fontSize: '14px' }}
               >
                 {cell || ''}
@@ -44,21 +44,22 @@ export default function Home() {
             ))
           )}
         </div>
-
       </div>
       <div className='mt-5 mb-5'>
-        <h1 className="text-2xl font-bold mb-4 text-center">Word List</h1>
-        <div className='flex felx-wrap gap-2 justify-center'>
-          {gridWithEmptyCells.map((row, rowIndex) =>
-            words.map((word, wordIndex) => (
-              <div
-                key={wordIndex}
-                className='p-2 text-center rounded'
-                style={{ minWidth: '100px' }}>
-                {word}
-              </div>
-            ))
-          )}
+        <h1 className="text-2xl font-bold mb-5 text-center">Word List</h1>
+        <div
+          className='flex flex-wrap gap-2 justify-center'
+          style={{ width: '600px', height: '600px', overflowY: 'auto' }}
+        >
+          {words.map((word, index) => (
+            <div
+              key={index}
+              className='p-2 text-center rounded border border-gray-300 k font-bold'
+              style={{ minWidth: '100px', maxWidth: '100px' }}
+            >
+              {word}
+            </div>
+          ))}
         </div>
       </div>
     </div>
