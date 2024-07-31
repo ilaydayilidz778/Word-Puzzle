@@ -3,12 +3,7 @@ import { wordPlacement } from '@/utils/wordPlacement';
 
 export default function Home() {
   const words = [
-    "AWARE", "COAT", "BARROW", "ARC", "AIR", "FORCE", "TWO", "SEE", "SORTED",
-    "TEA", "SUMS", "SLOB", "SEAS", "BOLT", "GOO", "SKIP", "AWAIT", "WOOD",
-    "EVIL", "STOP", "SEPHORA", "SMOKE", "SCREEN", "MINES", "SONG", "SEND",
-    "WEEKEND", "LAST", "SEVEN",
-    "JUMP", "CODE", "MOUSE", "BRAVE", "SHINE", "FLY", "WATER", "BRAIN", "LOVE",
-    "SUNNY", "TRICK", "HAPPY", "PLANET", "FIGHT", "PEACE", "GLOW", "WATER", "CAT", "SUN"
+    "AWARE", "COAT", "BARROW", "CAT", "SUN", "RENT", "ANNUAL", "ORANGE", "ARCHITECTURE", "ARREST", "ARRANGE"
   ];
   const grid = wordPlacement(words);
 
@@ -49,7 +44,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold mb-5 text-center">Word List</h1>
         <div
           className='flex flex-wrap gap-2 justify-center'
-          style={{ width: '600px', height: '600px', overflowY: 'auto' }}
+          style={{ width: '600px', maxHeight: '600px', overflowY: 'auto' }}
         >
           {words.map((word, index) => (
             <div
