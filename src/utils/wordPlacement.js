@@ -6,12 +6,8 @@ export const wordPlacement = (words) => {
         word.split('').forEach((letter, i) => {
             if (direction === 'left-to-right') {
                 grid[y][x + i] = letter;
-            } else if (direction === 'right-to-left') {
-                grid[y][x - i] = letter;
             } else if (direction === 'top-to-bottom') {
                 grid[y + i][x] = letter;
-            } else if (direction === 'bottom-to-top') {
-                grid[y - i][x] = letter;
             }
         });
     };
@@ -20,15 +16,9 @@ export const wordPlacement = (words) => {
         if (direction === 'left-to-right') {
             if (x + word.length > gridSize) return false;
             return word.split('').every((letter, i) => grid[y][x + i] === '' || grid[y][x + i] === letter);
-        } else if (direction === 'right-to-left') {
-            if (x - word.length + 1 < 0) return false;
-            return word.split('').every((letter, i) => grid[y][x - i] === '' || grid[y][x - i] === letter);
         } else if (direction === 'top-to-bottom') {
             if (y + word.length > gridSize) return false;
             return word.split('').every((letter, i) => grid[y + i][x] === '' || grid[y + i][x] === letter);
-        } else if (direction === 'bottom-to-top') {
-            if (y - word.length + 1 < 0) return false;
-            return word.split('').every((letter, i) => grid[y - i][x] === '' || grid[y - i][x] === letter);
         }
         return false;
     };
@@ -46,25 +36,11 @@ export const wordPlacement = (words) => {
                         bestPlacement = { x, y, direction: 'left-to-right' };
                     }
                 }
-                if (canPlaceWord(word, x, y, 'right-to-left')) {
-                    const score = calculatePlacementScore(word, x, y, 'right-to-left');
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestPlacement = { x, y, direction: 'right-to-left' };
-                    }
-                }
                 if (canPlaceWord(word, x, y, 'top-to-bottom')) {
                     const score = calculatePlacementScore(word, x, y, 'top-to-bottom');
                     if (score > bestScore) {
                         bestScore = score;
                         bestPlacement = { x, y, direction: 'top-to-bottom' };
-                    }
-                }
-                if (canPlaceWord(word, x, y, 'bottom-to-top')) {
-                    const score = calculatePlacementScore(word, x, y, 'bottom-to-top');
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestPlacement = { x, y, direction: 'bottom-to-top' };
                     }
                 }
             }
@@ -83,27 +59,11 @@ export const wordPlacement = (words) => {
                     score -= 1; // Negative score for conflicting letters
                 }
             }
-        } else if (direction === 'right-to-left') {
-            for (let i = 0; i < word.length; i++) {
-                if (grid[y][x - i] === word[i]) {
-                    score += 1;
-                } else if (grid[y][x - i] !== '') {
-                    score -= 1; // Negative score for conflicting letters
-                }
-            }
         } else if (direction === 'top-to-bottom') {
             for (let i = 0; i < word.length; i++) {
                 if (grid[y + i][x] === word[i]) {
                     score += 1;
                 } else if (grid[y + i][x] !== '') {
-                    score -= 1; // Negative score for conflicting letters
-                }
-            }
-        } else if (direction === 'bottom-to-top') {
-            for (let i = 0; i < word.length; i++) {
-                if (grid[y - i][x] === word[i]) {
-                    score += 1;
-                } else if (grid[y - i][x] !== '') {
                     score -= 1; // Negative score for conflicting letters
                 }
             }

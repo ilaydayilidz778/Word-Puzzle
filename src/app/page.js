@@ -3,7 +3,7 @@ import { wordPlacement } from '@/utils/wordPlacement';
 
 export default function Home() {
   const words = [
-    "AWARE", "COAT", "BARROW", "CAT", "SUN", "RENT", "ANNUAL", "ORANGE", "ARCHITECTURE", "ARREST", "ARRANGE"
+    "AWARE", "COAT", "BARROW", "CAT", "SUN", "RENT", "ANNUAL", "ORANGE", "ARCHITECTURE", "ARREST", "ARRANGE", "HOLE", "LANDING", "INNER", "ARROW", "DEEP", "PEACE", "PERFECT"
   ];
   const grid = wordPlacement(words);
 
@@ -34,7 +34,7 @@ export default function Home() {
                 className={`border border-white-400 flex items-center justify-center text-sm ${cell ? 'bg-white text-black' : 'bg-black text-white'}`}
                 style={{ width: '40px', height: '40px', fontSize: '14px' }}
               >
-                {cell || ''}
+                {cell || null}
               </div>
             ))
           )}
