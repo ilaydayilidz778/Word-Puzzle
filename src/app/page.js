@@ -1,4 +1,3 @@
-"use client";
 import { wordPlacement } from '@/utils/wordPlacement';
 
 export default function Home() {
