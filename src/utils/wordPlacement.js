@@ -23,28 +23,65 @@ export const wordPlacement = (words) => {
         return false;
     };
 
-    const findPlacement = (word) => {
+    const checkSurroundingSpaces = (x, y, direction, length) => {
+        const directions = {
+            'left-to-right': [[-1, 0], [1, 0], [0, -1], [0, length]],
+            'top-to-bottom': [[-1, 0], [1, 0], [0, -1], [length, 0]]
+        };
+        return directions[direction].every(([dy, dx]) => {
+            const ny = y + dy;
+            const nx = x + dx;
+            if (ny < 0 || ny >= gridSize || nx < 0 || nx >= gridSize) return true; // Out of bounds is allowed
+            return grid[ny][nx] === '';
+        });
+    };
+
+    const findIntersectionPlacement = (word) => {
         let bestPlacement = null;
         let bestScore = -1;
 
         for (let y = 0; y < gridSize; y++) {
             for (let x = 0; x < gridSize; x++) {
-                if (canPlaceWord(word, x, y, 'left-to-right')) {
-                    const score = calculatePlacementScore(word, x, y, 'left-to-right');
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestPlacement = { x, y, direction: 'left-to-right' };
-                    }
-                }
-                if (canPlaceWord(word, x, y, 'top-to-bottom')) {
-                    const score = calculatePlacementScore(word, x, y, 'top-to-bottom');
-                    if (score > bestScore) {
-                        bestScore = score;
-                        bestPlacement = { x, y, direction: 'top-to-bottom' };
+                for (const direction of ['left-to-right', 'top-to-bottom']) {
+                    if (canPlaceWord(word, x, y, direction) && checkSurroundingSpaces(x, y, direction, word.length)) {
+                        const score = calculatePlacementScore(word, x, y, direction);
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestPlacement = { x, y, direction };
+                        }
                     }
                 }
             }
         }
+
+        return bestPlacement;
+    };
+
+    const findRandomPlacement = (word) => {
+        const directions = ['left-to-right', 'top-to-bottom'];
+        let bestPlacement = null;
+        let bestScore = -1;
+
+        const coordinates = [];
+        for (let y = 0; y < gridSize; y++) {
+            for (let x = 0; x < gridSize; x++) {
+                coordinates.push({ x, y });
+            }
+        }
+        coordinates.sort(() => Math.random() - 0.5); // Shuffle coordinates
+
+        for (const { x, y } of coordinates) {
+            for (const direction of directions) {
+                if (canPlaceWord(word, x, y, direction) && checkSurroundingSpaces(x, y, direction, word.length)) {
+                    const score = calculatePlacementScore(word, x, y, direction);
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestPlacement = { x, y, direction };
+                    }
+                }
+            }
+        }
+
         return bestPlacement;
     };
 
@@ -73,21 +110,25 @@ export const wordPlacement = (words) => {
     };
 
     const placeWords = (words) => {
-        let placedWords = new Set();
-
-        for (const word of words) {
-            const placement = findPlacement(word);
-            if (placement) {
-                placeWord(word, placement.x, placement.y, placement.direction);
-                placedWords.add(word);
-            } else {
-                console.error(`${word} could not be placed in the grid.`);
-            }
+        // Place the first word randomly
+        const firstWord = words.shift();
+        const initialPlacement = findRandomPlacement(firstWord);
+        if (initialPlacement) {
+            placeWord(firstWord, initialPlacement.x, initialPlacement.y, initialPlacement.direction);
+        } else {
+            console.error(`${firstWord} could not be placed in the grid.`);
         }
 
+        // Place the remaining words
         words.forEach(word => {
-            if (!placedWords.has(word)) {
-                console.error(`${word} was not placed on the grid.`);
+            let placement = findIntersectionPlacement(word);
+            if (!placement) {
+                placement = findRandomPlacement(word);
+            }
+            if (placement) {
+                placeWord(word, placement.x, placement.y, placement.direction);
+            } else {
+                console.error(`${word} could not be placed in the grid.`);
             }
         });
     };
