@@ -3,7 +3,7 @@ import { wordPlacement } from '@/utils/wordPlacement';
 
 export default function Home() {
   const words = [
-    "AWARE", "COAT", "BARROW", "CAT", "SUN", "RENT", "ANNUAL", "ORANGE", "ARCHITECTURE", "ARREST", "ARRANGE", "HOLE", "LANDING", "INNER", "ARROW", "DEEP", "PEACE", "PERFECT"
+    "AWARE", "COAT", "ARC", "SEE", "BARROW", "SONG", "SKIP", "STOP", "ART", "GREEN", "WHITE", "SMOKE", "SCREEN", "SENDS", "SEPHORA", "SORTED", "TEA", "AWAIT", "TWO", "SUMS", "BOLT", "SEVEN"
   ];
   const grid = wordPlacement(words);
 
@@ -31,7 +31,7 @@ export default function Home() {
             row.map((cell, cellIndex) => (
               <div
                 key={`${rowIndex}-${cellIndex}`}
-                className={`border border-white-400 flex items-center justify-center text-sm ${cell ? 'bg-white text-black' : 'bg-black text-white'}`}
+                className={`border border-white-400 flex items-center justify-center  text-sm ${cell ? 'bg-white text-black' : 'bg-black text-white'}`}
                 style={{ width: '40px', height: '40px', fontSize: '14px' }}
               >
                 {cell || null}
@@ -49,7 +49,7 @@ export default function Home() {
           {words.map((word, index) => (
             <div
               key={index}
-              className='p-2 text-center rounded border border-gray-300 k font-bold'
+              className='p-2 text-center rounded border border-gray-800  font-bold'
               style={{ minWidth: '100px', maxWidth: '100px' }}
             >
               {word}
